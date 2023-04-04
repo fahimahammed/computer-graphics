@@ -44,7 +44,7 @@ int main()
     return 0;
 }
 /*
-Input: numOfVertex 4
+Input: 4
     50 50
     100 50
     100 100
