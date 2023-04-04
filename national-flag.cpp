@@ -1,31 +1,28 @@
-//#include <iostream>
 #include<graphics.h>
-#include<stdio.h>
-#include<conio.h>
-
 int main()
 {
-    int gd = DETECT;
-    int gm;
-    initgraph(&gd,&gm, (char*)"");
-
+    int gd = DETECT, gm;
+    initgraph(&gd, &gm, (char*)"");
+    
     setcolor(GREEN);
-    rectangle(50,50,250,170);
+    rectangle(100, 50, 400, 230);
     setfillstyle(SOLID_FILL,GREEN);
-    floodfill(51,51,GREEN);
-
-    setcolor(WHITE);
-    rectangle(40,40,50,300);
-    setfillstyle(SOLID_FILL,WHITE);
-    floodfill(41,41,WHITE);
+    floodfill(101,51,GREEN);
 
     setcolor(RED);
-    circle(150,110,40);
+    circle(235, 140, 60);
     setfillstyle(SOLID_FILL,RED);
-    floodfill(131,101,RED);
+    floodfill(236, 141, RED);
+
+    setcolor(WHITE);
+    rectangle(90, 40, 99, 450);
+    setfillstyle(1, WHITE);
+    floodfill(91, 41, WHITE);
+
+    setcolor(WHITE);
+    outtextxy(200, 455, "National Flag of Bangladesh");
 
     getch();
-    //delay(500000);
     closegraph();
     return 0;
 }
