@@ -1,4 +1,14 @@
 # Computer Graphics Lab
+
+| 	***Course Information***	 | 	
+| 	:-----	 | 	
+| 	Language: **C/C++ and Python**	| 	
+| 	Part-3, Even Semester	|  
+| 	Course Code: **CSE3222**	| 	 
+| 	Course Title: **Computer Graphics Lab**	| 
+| 	Depertment: **Computer Scince & Engineering**	| 
+
+## Lab Manual
 1. Draw a National Flag
 2. Hidden Surface Elimination
 3. Translation,Rotation,Scaling
