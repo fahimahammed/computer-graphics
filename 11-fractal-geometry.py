@@ -21,7 +21,7 @@ def drawSierpinski(length, depth):
         turtle.right(60)
 
 # Set up the turtle graphics window
-turtle.speed(0)  # Fastest speed
+turtle.speed(1)  # Fastest speed
 turtle.penup()
 turtle.goto(-200, -200)
 turtle.pendown()

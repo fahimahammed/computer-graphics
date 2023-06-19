@@ -45,3 +45,9 @@ y_center = 0
 radius = 5
 
 midpoint_circle(x_center, y_center, radius)
+
+# center (xc, yc)
+# x0 = 0; y0 = r
+# Decision parameter, P = 1 - r
+# if P < 0 then, x = x+1; y = y; p = p + 2x + 1
+# else x = x + 1; y = y-1; p = p-2(x-y)+1

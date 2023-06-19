@@ -68,3 +68,9 @@ plt.ylabel('Y')
 plt.title('Bresenham Line Drawing')
 plt.grid(True)
 plt.show()
+
+
+# find dx and dy
+# decision parameter, P = 2dy - 2dx
+# if P < 0 then, P = P + 2dy; x = x+1; y= y
+# else P = P + 2dy - 2dx; x = s+1; y = y+1

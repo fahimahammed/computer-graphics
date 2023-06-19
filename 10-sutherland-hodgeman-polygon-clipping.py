@@ -38,7 +38,7 @@ def clip(subjectPolygon, frame):
     return outputList
 
 # Create a subject polygon in the shape of a star
-subjectPolygon = [(-2, 0.3), (-0.3, 0.3), (0, 2), (0.3, 0.3), (2, 0), (0.3, -0.3), (0, -2), (-0.3, -0.3)]
+subjectPolygon = [(-2, 0.3), (-0.3, 0.3), (0, 2), (0.3, 0.3), (2, 0), (0.3, -0.3), (0, -2), (0.4, -1.5), (-0.3, -0.3)]
 
 # Define the rectangular frame
 frame= [(-1.5, -1.5), (1.5, -1.5), (1.5, 1.5), (-1.5, 1.5)]

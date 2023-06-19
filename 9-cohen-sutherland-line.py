@@ -102,3 +102,7 @@ plt.axvline(x_min, color='k', linestyle='--')
 plt.axvline(x_max, color='k', linestyle='--')
 plt.legend()
 plt.show()
+
+
+# divided into 9 region
+# 0 0 0 0 (T, B, R, L)
