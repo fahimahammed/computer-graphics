@@ -33,7 +33,7 @@ axes[0].set_title('Superellipsoid (2D)')
 
 # Plot the Superellipsoid in 3D
 axes[1] = fig.add_subplot(122, projection='3d')
-axes[1].plot_surface(x, y, z, cmap='viridis')
+axes[1].plot_surface(x, y, z, cmap='cool')
 axes[1].set_xlabel('X')
 axes[1].set_ylabel('Y')
 axes[1].set_zlabel('Z')

@@ -1,6 +1,11 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
+
+# formula:
+# cp = <>Bi Jn,i(t) [Bi = ith control  point]
+# Jn,i(t) = C(ni) t^i (1-t)^(n-i)
+# C(ni) = n! / (i! * (n-i)!)
 def computeBezierCurve(controlPoints, numPoints):
     t = np.linspace(0, 1, numPoints)
     n = len(controlPoints) - 1
@@ -16,7 +21,7 @@ def binomialCoefficient(n, k):
     return np.math.factorial(n) / (np.math.factorial(k) * np.math.factorial(n - k))
 
 # Define control points
-controlPoints = np.array([[0, 0], [2, 5], [5, 3], [10, 8]])
+controlPoints = np.array([[0, 0], [2, 5], [5, 3]])
 
 # Compute Bezier curve points
 numPoints = 100
