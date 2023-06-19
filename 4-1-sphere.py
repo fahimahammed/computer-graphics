@@ -21,7 +21,6 @@ plt.plot(x, y, 'b.')
 plt.grid(True)
 plt.axis('equal')
 
-
 ax = plt.subplot(122, projection='3d')
 ax.set_title("Sphere 3D")
 ax.set_xlabel('X')
