@@ -1,15 +1,15 @@
 import matplotlib.pyplot as plt
 
-def draw_line(x0, y0, x1, y1):
+def drawLine(x0, y0, x1, y1):
     # Calculate the differences and absolute values
     dx = abs(x1 - x0)
     dy = abs(y1 - y0)
 
     # Determine the slope of the line
-    is_steep = dy > dx
+    isSteep = dy > dx
 
     # Swap the coordinates if the line is steep
-    if is_steep:
+    if isSteep:
         x0, y0 = y0, x0
         x1, y1 = y1, x1
 
@@ -26,7 +26,7 @@ def draw_line(x0, y0, x1, y1):
     p = 2 * dy - dx
 
     # Determine the direction of increment in y
-    y_step = 1 if y0 < y1 else -1
+    yStep = 1 if y0 < y1 else -1
 
     # Generate the points of the line
     x = x0
@@ -34,13 +34,13 @@ def draw_line(x0, y0, x1, y1):
     points = []
     for _ in range(dx + 1):
         # Append the current point to the list
-        point = (y, x) if is_steep else (x, y)
+        point = (y, x) if isSteep else (x, y)
         points.append(point)
 
         # Update the decision parameter
         p += 2 * dy
         if p >= 0:
-            y += y_step
+            y += yStep
             p -= 2 * dx
 
         # Move to the next x-coordinate
@@ -49,20 +49,20 @@ def draw_line(x0, y0, x1, y1):
     return points
 
 # Define the line coordinates
-x0, y0 = 1, 1
-x1, y1 = 8, 5
+x0, y0 = 1, 5
+x1, y1 = 8, 9
 
 # Call the line drawing function
-line_points = draw_line(x0, y0, x1, y1)
+linePoints = drawLine(x0, y0, x1, y1)
 
 # Print the points
 print("Line Points:")
-for point in line_points:
+for point in linePoints:
     print(point)
 
 # Plot the line
-x_coords, y_coords = zip(*line_points)
-plt.plot(x_coords, y_coords, marker='o')
+xCoords, yCoords = zip(*linePoints)
+plt.plot(xCoords, yCoords, marker='o')
 plt.xlabel('X')
 plt.ylabel('Y')
 plt.title('Bresenham Line Drawing')

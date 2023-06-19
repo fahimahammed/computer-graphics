@@ -6,11 +6,11 @@ theta = np.linspace(0, 2 * np.pi, 100)
 phi = np.linspace(0, 2 * np.pi, 100)
 theta, phi = np.meshgrid(theta, phi)
 
-R = 2
-r = 1
-x = (R + r * np.cos(theta)) * np.cos(phi)
-y = (R + r * np.cos(theta)) * np.sin(phi)
-z = r * np.sin(theta)
+majorRadius = 2
+minorRadius = 1
+x = (majorRadius + minorRadius * np.cos(theta)) * np.cos(phi)
+y = (majorRadius + minorRadius * np.cos(theta)) * np.sin(phi)
+z = minorRadius * np.sin(theta)
 
 plt.subplot(121)
 plt.title("Torus 2D")
