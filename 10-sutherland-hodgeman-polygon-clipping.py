@@ -1,66 +1,74 @@
 import matplotlib.pyplot as plt
 
-def clip_polygon(frame, polygon):
-    def inside(p, clip_edge):
-        return (clip_edge[1][0] - clip_edge[0][0]) * (p[1] - clip_edge[0][1]) > (clip_edge[1][1] - clip_edge[0][1]) * (p[0] - clip_edge[0][0])
+# Function to perform polygon clipping
+def clip(subjectPolygon, frame):
+    # Function to check if a point is inside an edge
+    def inside(p, cp1, cp2):
+        # Original formula: (cp2[x] - cp1[x]) * (p[y] - cp1[y]) > (cp2[y] - cp1[y]) * (p[x] - cp1[x])
+        return (cp2[0] - cp1[0]) * (p[1] - cp1[1]) > (cp2[1] - cp1[1]) * (p[0] - cp1[0])
 
-    def intersect(p1, p2, clip_edge):
-        dx = p2[0] - p1[0]
-        dy = p2[1] - p1[1]
-        t = (clip_edge[0][1] - p1[1]) * dx - (clip_edge[0][0] - p1[0]) * dy
-        d = (clip_edge[1][0] - clip_edge[0][0]) * dy - (clip_edge[1][1] - clip_edge[0][1]) * dx
+    # Function to calculate the intersection point
+    def intersection(cp1, cp2, s, e):
+        dc = [cp1[0] - cp2[0], cp1[1] - cp2[1]]
+        dp = [s[0] - e[0], s[1] - e[1]]
+        n1 = cp1[0] * cp2[1] - cp1[1] * cp2[0]
+        n2 = s[0] * e[1] - s[1] * e[0]
+        n3 = 1.0 / (dc[0] * dp[1] - dc[1] * dp[0])
+        # Original formula: [(n1 * dp[x] - n2 * dc[x]) * n3, (n1 * dp[y] - n2 * dc[y]) * n3]
+        return [(n1 * dp[0] - n2 * dc[0]) * n3, (n1 * dp[1] - n2 * dc[1]) * n3]
 
-        if d == 0:
-            return None  # Parallel or coincident
+    # Make a copy of the subject polygon
+    outputList = subjectPolygon.copy()
+    cp1 = frame[-1]  # Last point of the clip polygon
+    for cp2 in frame:
+        inputList = outputList
+        outputList = []
+        s = inputList[-1]  # Last point of the subject polygon
+        for e in inputList:
+            if inside(e, cp1, cp2):  # Check if point e is inside the edge formed by cp1 and cp2
+                print(e, cp1, cp2, s)
+                if not inside(s, cp1, cp2):  # Check if point s is outside the edge formed by cp1 and cp2
+                    outputList.append(intersection(cp1, cp2, s, e))  # Add intersection point to output
+                outputList.append(e)  # Add point e to output
+            elif inside(s, cp1, cp2):  # Check if point s is inside the edge formed by cp1 and cp2
+                outputList.append(intersection(cp1, cp2, s, e))  # Add intersection point to output
+            s = e
+        cp1 = cp2
 
-        t /= d
-        if 0 <= t <= 1:
-            return [p1[0] + t * dx, p1[1] + t * dy]
-        else:
-            return None
+    return outputList
 
-    output = polygon.copy()
-    clip_edges = [(frame[i], frame[(i+1) % len(frame)]) for i in range(len(frame) - 1)]
+# Create a subject polygon in the shape of a star
+subjectPolygon = [(-2, 0.3), (-0.3, 0.3), (0, 2), (0.3, 0.3), (2, 0), (0.3, -0.3), (0, -2), (-0.3, -0.3)]
 
-    for clip_edge in clip_edges:
-        input = output.copy()
-        output = []
-        s = input[-1]
+# Define the rectangular frame
+frame= [(-1.5, -1.5), (1.5, -1.5), (1.5, 1.5), (-1.5, 1.5)]
 
-        for p in input:
-            if inside(p, clip_edge):
-                if not inside(s, clip_edge):
-                    intersect_point = intersect(s, p, clip_edge)
-                    if intersect_point is not None:
-                        output.append(intersect_point)
-                output.append(p)
-            elif inside(s, clip_edge):
-                intersect_point = intersect(s, p, clip_edge)
-                if intersect_point is not None:
-                    output.append(intersect_point)
-            s = p
+# Call the clip function to obtain the output polygon
+outputPolygon = clip(subjectPolygon, frame)
 
-    return output
+# Extract the x and y coordinates of the output polygon
+output_x = [point[0] for point in outputPolygon]
+output_y = [point[1] for point in outputPolygon]
 
-# Example usage
-frame = [(0, 0), (8, 0), (8, 8), (0, 8), (0, 0)]  # Frame vertices in clockwise order (including the last vertex to complete the box)
-polygon = [(2, 2), (6, 2), (4, 6), (-2, 4), (10, 5)]  # Polygon vertices in any order
+# Plot the subject polygon
+subject_x = [point[0] for point in subjectPolygon]
+subject_y = [point[1] for point in subjectPolygon]
+plt.plot(subject_x + [subject_x[0]], subject_y + [subject_y[0]], 'b-', label='Subject Polygon')
 
-clipped_polygon = clip_polygon(frame, polygon)
+# Plot the clip polygon
+clip_x = [point[0] for point in frame]
+clip_y = [point[1] for point in frame]
+plt.plot(clip_x + [clip_x[0]], clip_y + [clip_y[0]], 'r-', label='Frame')
 
-# Plotting the results
-frame_x, frame_y = zip(*frame)
-polygon_x, polygon_y = zip(*polygon)
-clipped_x, clipped_y = zip(*clipped_polygon)
+# Plot the output polygon
+plt.plot(output_x + [output_x[0]], output_y + [output_y[0]], 'g-', label='Output Polygon')
 
-plt.plot(frame_x, frame_y, 'r-', label='Frame')
-plt.plot(polygon_x, polygon_y, 'b-', label='Original Polygon')
-plt.plot(clipped_x, clipped_y, 'g-', label='Clipped Polygon')
-for i, (x, y) in enumerate(polygon):
-    plt.text(x, y, chr(97 + i), fontsize=12, ha='center', va='center')
+# Add labels and title to the plot
 plt.legend()
 plt.xlabel('X')
 plt.ylabel('Y')
-plt.title('Sutherland-Hodgman Polygon Clipping')
+plt.title('Polygon Clipping')
 plt.grid(True)
+
+# Display the plot
 plt.show()
